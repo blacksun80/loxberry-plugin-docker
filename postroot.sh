@@ -90,5 +90,22 @@ then
 	docker run --volume=/var/run/docker.sock:/var/run/docker.sock --volume=/opt/portainer:/data -p=9000:9000 --name="portainer" --restart="unless-stopped" --detach=true portainer/portainer-ce:latest
 fi
 
+# Verify that Docker and the Portainer container are actually up.
+# If not, abort with exit code 2 so LoxBerry reports a real failure
+# instead of marking the plugin as successfully installed.
+if [ ! -x "/usr/bin/docker" ]
+then
+	echo "<FAIL> Docker binary /usr/bin/docker not found - installation failed."
+	exit 2
+fi
+
+if [ -z "$(docker ps --quiet --filter name=portainer)" ]
+then
+	echo "<FAIL> Portainer container is not running - installation failed."
+	exit 2
+fi
+
+echo "<OK> Docker and Portainer container are up and running."
+
 # Exit with Status 0
 exit 0
