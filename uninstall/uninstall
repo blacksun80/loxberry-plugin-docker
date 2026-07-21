@@ -39,7 +39,7 @@ systemctl disable docker > /dev/null 2>&1
 # down to the installed set first via dpkg-query.
 echo "<INFO> Removing Docker engine packages..."
 export DEBIAN_FRONTEND=noninteractive
-DOCKER_PKGS=$(dpkg-query -W -f='${Package}\n' docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras 2>/dev/null)
+DOCKER_PKGS=$(dpkg-query -W -f='${Package}\n' docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-model-plugin docker-ce-rootless-extras 2>/dev/null)
 if [ -n "$DOCKER_PKGS" ]
 then
 	apt-get purge -y $DOCKER_PKGS > /dev/null 2>&1
